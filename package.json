@@ -17,9 +17,6 @@
     "test:coverage": "turbo run test:coverage",
     "prepare": "husky"
   },
-  "lint-staged": {
-    "*.{js,cjs,mjs,ts,tsx,jsx,json,jsonc,css}": "biome check --write --no-errors-on-unmatched"
-  },
   "devDependencies": {
     "@biomejs/biome": "^2.5.4",
     "@commitlint/cli": "^21.2.1",
