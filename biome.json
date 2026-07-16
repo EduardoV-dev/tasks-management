@@ -1,17 +1,16 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.5.4/schema.json",
   "files": {
-    "includes": [
-      "**",
-      "!**/.next",
-      "!**/.turbo",
-      "!**/coverage",
-      "!**/dist",
-      "!**/node_modules"
-    ]
+    "includes": ["**", "!**/.next", "!**/.turbo", "!**/coverage", "!**/dist", "!**/node_modules"]
   },
   "formatter": {
-    "indentStyle": "space"
+    "indentStyle": "space",
+    "bracketSameLine": true,
+    "bracketSpacing": true,
+    "indentWidth": 2,
+    "lineWidth": 100,
+    "trailingNewline": true,
+    "lineEnding": "auto"
   },
   "css": {
     "parser": {
@@ -23,6 +22,13 @@
     "rules": {
       "style": {
         "useImportType": "off"
+      }
+    }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
       }
     }
   }

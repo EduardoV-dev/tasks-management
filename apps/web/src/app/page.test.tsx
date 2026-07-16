@@ -3,7 +3,5 @@ import Home from "./page";
 
 it("renders the application name", () => {
   render(<Home />);
-  expect(
-    screen.getByRole("heading", { name: "Tasks Management" }),
-  ).toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: "Tasks Management" })).toBeInTheDocument();
 });
