@@ -1,7 +1,7 @@
 {
   "name": "tasks-management",
   "private": true,
-  "packageManager": "pnpm@11.0.9",
+  "packageManager": "pnpm@11.13.1",
   "engines": {
     "node": ">=24.0.0",
     "pnpm": ">=11.0.0"
