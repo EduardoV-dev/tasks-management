@@ -3,9 +3,11 @@ import {
 	Catch,
 	type ExceptionFilter,
 	HttpException,
+	Injectable,
 } from "@nestjs/common";
 import type { Response } from "express";
-import type { ApiErrorPayload, ApiResponse } from "./api-response";
+import { PinoLogger } from "nestjs-pino";
+import type { ApiErrorPayload, ApiResponse } from "./api-response.types";
 
 function isApiErrorPayload(value: unknown): value is ApiErrorPayload {
 	if (typeof value !== "object" || value === null) {
@@ -21,8 +23,13 @@ function isApiErrorPayload(value: unknown): value is ApiErrorPayload {
 	);
 }
 
+@Injectable()
 @Catch()
 export class ApiExceptionFilter implements ExceptionFilter {
+	constructor(private readonly logger: PinoLogger) {
+		logger.setContext(ApiExceptionFilter.name);
+	}
+
 	catch(exception: unknown, host: ArgumentsHost): void {
 		const response = host.switchToHttp().getResponse<Response>();
 
@@ -49,6 +56,8 @@ export class ApiExceptionFilter implements ExceptionFilter {
 
 			return;
 		}
+
+		this.logger.error({ err: exception }, "Unhandled request error");
 
 		response.status(500).json({
 			ok: false,

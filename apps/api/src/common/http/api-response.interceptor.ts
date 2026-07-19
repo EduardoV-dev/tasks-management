@@ -7,7 +7,7 @@ import {
 import { Reflector } from "@nestjs/core";
 import { map, Observable } from "rxjs";
 import { API_MESSAGE } from "./api-message.decorator";
-import { ApiResponse } from "./api-response";
+import { ApiResponse } from "./api-response.types";
 
 @Injectable()
 export class ApiResponseInterceptor<T>

@@ -1,35 +1,13 @@
-import { BadRequestException, ValidationPipe } from "@nestjs/common";
-import { NestFactory, Reflector } from "@nestjs/core";
+import "dotenv/config";
+import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
+import { configureApp } from "./app.setup";
 import { ENV_VARIABLES } from "./common/constants/env-variables";
-import { ApiExceptionFilter } from "./common/http/api-exception.filter";
-import { ApiResponseInterceptor } from "./common/http/api-response.interceptor";
 
 async function bootstrap() {
-	const app = await NestFactory.create(AppModule);
+	const app = await NestFactory.create(AppModule, { bufferLogs: true });
 
-	app.setGlobalPrefix("api");
-	app.useGlobalPipes(
-		new ValidationPipe({
-			whitelist: true,
-			forbidNonWhitelisted: true,
-			transform: true,
-			exceptionFactory: (errors) =>
-				new BadRequestException({
-					message: "Validation failed",
-					code: "VALIDATION_ERROR",
-					details: errors.flatMap(({ property, constraints }) =>
-						Object.entries(constraints ?? {}).map(([code, message]) => ({
-							code,
-							message,
-							field: property,
-						})),
-					),
-				}),
-		}),
-	);
-	app.useGlobalInterceptors(new ApiResponseInterceptor(app.get(Reflector)));
-	app.useGlobalFilters(new ApiExceptionFilter());
+	configureApp(app);
 
 	await app.listen(ENV_VARIABLES.PORT);
 }
